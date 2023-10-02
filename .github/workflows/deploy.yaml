@@ -1,0 +1,32 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Nodejs
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 16.x
+      - name: Install nodejs dependencies
+        run: |
+          yarn
+      - name: Run Webpack Build
+        run: |
+          yarn production
+      - name: Commit
+        run: |
+          git config --local user.name "ihwenwen20"
+          git config --local user.email "ihwannh96@gmail.com"
+          git add .
+          git commit -m "[AUTO:BUILD] build from index.js"
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GH_PAGES_TOKEN }}
+          branch: "master"
+          repository: "ihwenwen20/tes-github-action2"
