@@ -28,5 +28,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GH_PAGES_TOKEN }}
-          branch: "master"
+          branch: ${{ github.head_ref }}
           repository: "ihwenwen20/tes-github-action2"
